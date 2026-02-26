@@ -1,0 +1,16 @@
+# IDEs
+.idea/
+.vscode/
+
+# Python
+.venv/
+__pycache__/
+
+# Machine Learning
+data_raw/
+models/
+
+# Distributions / Builds
+build/
+dist/
+*.spec
