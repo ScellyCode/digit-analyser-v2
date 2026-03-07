@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from 'react'
 import Canvas from "./Canvas.jsx"
-import ProbabilityBar from "./Probs.jsx"
+import ProbabilityBar from "./ProbabilityBar.jsx"
 
 function App() {
     const [probs, setProbs] = useState(Array(10).fill(0))

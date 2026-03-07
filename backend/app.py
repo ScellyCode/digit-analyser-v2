@@ -6,12 +6,12 @@ from helper_functions import get_highest_model_filename
 
 import sys
 import webview
+import os
+import numpy as np
+from PIL import Image
 
 
 def save_debug_image(image_data_vector):
-    import numpy as np
-    from PIL import Image
-    import os
     arr = np.array(image_data_vector).reshape(28, 28) * 255
     img = Image.fromarray(arr.astype(np.uint8), mode="L")
     temp_dir = tempfile.gettempdir()
@@ -26,7 +26,6 @@ class Api:
         self.nn = NeuralNetwork(self.current_model)
 
     def predict_digit(self, image_data_vector) -> list:
-        import numpy as np
         if '--dev' in sys.argv:
             save_debug_image(image_data_vector)
         x = np.array(image_data_vector).reshape(1, -1)
@@ -36,13 +35,9 @@ class Api:
         return self.current_model
 
     def get_models(self):
-        import os
         from helper_functions import get_models_dir
         models_dir = get_models_dir()
-        print(f"get_models() sucht in: {models_dir}")
-        print(f"Inhalt: {os.listdir(models_dir)}")
         files = [f for f in os.listdir(models_dir) if f.endswith('.npz')]
-        print(f"Gefundene Modelldateien: {files}")
         files.sort()
         return files
 
