@@ -49,14 +49,14 @@ function App() {
     }, []);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#242424] text-[rgba(255,255,255,0.87)]">
-            <div className="mr-8 p-6 border border-white/20 rounded-2xl bg-black flex-shrink-0">
+        <div className="min-h-screen flex items-center justify-center bg-[#282c34] text-[#abb2bf]">
+            <div className="mr-8 p-6 flex-shrink-0">
                 <Canvas onVector={handleVector} />
                 <div className="flex flex-col items-center mt-4 w-full">
                     <select
                         value={selectedModel}
                         onChange={handleModelChange}
-                        className="mt-2 px-3 py-2 rounded border border-gray-600 bg-[#181818] text-white w-full"
+                        className="mt-2 px-3 py-2 rounded border border-[#3e4451] bg-[#21252b] text-[#abb2bf] w-full"
                     >
                         {models.map((model) => (
                             <option key={model} value={model}>{model}</option>
@@ -64,7 +64,7 @@ function App() {
                     </select>
 
                     {modelInfo && (
-                        <div className="mt-4 p-3 rounded bg-[#181818] border border-gray-700 text-sm w-full">
+                        <div className="mt-4 p-3 rounded bg-[#21252b] border border-[#3e4451] text-sm w-full text-[#abb2bf]">
                             <div>Parameters: {modelInfo.parameters}</div>
                             <div>Layers: [{modelInfo.layers?.join(", ")}]</div>
                             <div>
@@ -81,7 +81,7 @@ function App() {
 
                 </div>
             </div>
-            <div className="p-6 border border-white/20 rounded-2xl bg-black flex flex-col gap-0 w-72">
+            <div className="p-6 flex flex-col gap-0 w-72">
                 {probs.map((percentage, digit) => (
                     <ProbabilityBar
                         key={digit}

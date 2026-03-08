@@ -114,9 +114,9 @@ export default function Canvas({ onVector }) {
 
     return (
         <div className="flex flex-col items-center select-none" onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp} onContextMenu={(e) => e.preventDefault()}>
-            <canvas ref={canvasRef} width={CANVAS_SIZE} height={CANVAS_SIZE} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} className="border border-gray-600 cursor-crosshair"/>
-            <div className="flex gap-4 mt-4">
-                <button onClick={clearCanvas} className="px-4 py-2 bg-red-600 text-white rounded">
+            <canvas ref={canvasRef} width={CANVAS_SIZE} height={CANVAS_SIZE} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} className="border border-[#3e4451] rounded cursor-crosshair"/>
+            <div className="flex gap-4 mt-4 w-full">
+                <button onClick={clearCanvas} className="w-full px-4 py-2 text-white font-semibold rounded cursor-pointer" style={{ background: 'linear-gradient(to right, #a855f7, #ec4899)' }}>
                     Clear
                 </button>
             </div>
