@@ -33,7 +33,7 @@ class Api:
 
     def predict_digit(self, image_data_vector: list[float]) -> list[float]:
         """
-        Takes an image vector and gives back a prediction for each digit inform of a list.
+        Takes an image vector and gives back a prediction for each digit in the form of a list.
         
         Args:
             image_data_vector (list[float]): A list of floats representing the image data.
