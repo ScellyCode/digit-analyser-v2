@@ -6,7 +6,7 @@ import numpy as np
 import webview
 from PIL import Image
 
-from backend.neural_network import NeuralNetwork
+from neural_network import NeuralNetwork
 from helper_functions import resource_path, get_highest_model_filename, get_models_dir
 
 
