@@ -1,10 +1,9 @@
-from helper_functions import relu
-from helper_functions import softmax
-from helper_functions import get_models_dir
-
-import numpy as np
 import os
 import re
+
+import numpy as np
+
+from helper_functions import relu, softmax, get_models_dir
 
 
 class NeuralNetwork:
@@ -12,7 +11,6 @@ class NeuralNetwork:
     A simple multi-layer neural network for classifying handwritten digits.
     Supports arbitrary number and size of hidden layers.
     """
-    MODELS_DIR = get_models_dir()
 
     def __init__(self, load_from_file: str):
         """
@@ -75,7 +73,7 @@ class NeuralNetwork:
         probs = self.forward_pass(x_predict)
         return np.argmax(probs, axis=1)
 
-    def load(self, filepath: str, directory: str = MODELS_DIR) -> dict:
+    def load(self, filepath: str, directory: str = None) -> dict:
         """
         Load network weights and biases from a .npz file.
 
@@ -88,6 +86,9 @@ class NeuralNetwork:
         Returns:
             dict: Dictionary with keys 'weights', 'biases', 'dimensions'
         """
+        if directory is None:
+            directory = get_models_dir()
+
         os.makedirs(directory, exist_ok=True)
 
         if not filepath.endswith(".npz"):
@@ -102,7 +103,7 @@ class NeuralNetwork:
 
             W_keys = sorted([k for k in data.files if re.fullmatch(r"W\d+", k)], key=lambda x: int(x[1:]))
             b_keys = sorted([k for k in data.files if re.fullmatch(r"b\d+", k)], key=lambda x: int(x[1:]))
-            
+
             if len(W_keys) != len(b_keys):
                 raise ValueError("Saved file is malformed: unequal number of W and b arrays")
 
@@ -112,11 +113,16 @@ class NeuralNetwork:
                 weights.append(data[wk])
                 biases.append(data[bk])
 
-        print(f"Model loaded from {filepath}")
         return {"weights": weights, "biases": biases, "dimensions": dimensions}
 
     def get_model_info(self) -> dict:
-        filepath = os.path.join(self.MODELS_DIR, self.file_name)
+        """
+        Returns metadate of the current model.
+        
+        Returns:
+            dict: Dictionary that contains the model information.
+        """
+        filepath = os.path.join(get_models_dir(), self.file_name)
         info = {}
         with np.load(filepath) as data:
             info["parameters"] = int(sum(data[k].size for k in data if k.startswith("W") or k.startswith("b")))

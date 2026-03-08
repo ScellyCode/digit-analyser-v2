@@ -1,7 +1,8 @@
 import os
 import sys
-import numpy as np
 import re
+
+import numpy as np
 
 
 def resource_path(relative_path: str) -> str:
@@ -51,12 +52,16 @@ def softmax(z: np.ndarray) -> np.ndarray:
 
 
 def get_models_dir() -> str:
-    MODELS_DIR: str = os.path.normpath(os.path.abspath(resource_path("./models")))
-    print(f"MODELS_DIR: {MODELS_DIR}")
-    return MODELS_DIR
+    """
+    Returns the absolute path of the directory containing the models.
+    
+    Returns:
+        str: Absolute path to the Models directory.
+    """
+    return os.path.normpath(os.path.abspath(resource_path("./models")))
 
 
-def get_highest_model_filename(directory: str = get_models_dir()) -> str | None:
+def get_highest_model_filename(directory: str = None) -> str | None:
     """
     Find the filename of the saved model with the highest version number in the given directory.
 
@@ -66,6 +71,9 @@ def get_highest_model_filename(directory: str = get_models_dir()) -> str | None:
     Returns:
         str | None: Filename of the model with highest version or None if no model found.
     """
+    if directory is None:
+        directory = get_models_dir()
+    
     pattern = re.compile(r"mnist_model_v(\d+)\.npz")
     highest_version = 0
     found = False

@@ -1,5 +1,3 @@
-import React from "react"
-
 export default function ProbabilityBar({ value, percentage, isLast }) {
     const limited = Math.max(0, Math.min(percentage ?? 0, 100))
     const rounded = limited.toFixed(2)

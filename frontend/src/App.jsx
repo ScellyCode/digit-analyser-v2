@@ -27,9 +27,6 @@ function App() {
         return () => clearInterval(interval);
     }, []);
 
-
-
-    // Modellwechsel an Backend melden
     const handleModelChange = async (e) => {
         const model = e.target.value;
         setSelectedModel(model);
@@ -38,21 +35,16 @@ function App() {
             const info = await window.pywebview.api.get_model_info();
             setModelInfo(info);
         }
-        setProbs(Array(10).fill(0)); // Reset Probbars
+        setProbs(Array(10).fill(0));
     };
-
-    const setProbabilities = (result) => {
-        setProbs(result)
-    }
 
     const handleVector = useCallback(async (vector) => {
         if (window.pywebview) {
             const result = await window.pywebview.api.predict_digit(vector);
             const arr = Array.isArray(result[0]) ? result[0] : result;
             if (Array.isArray(arr) && arr.length === 10) {
-                setProbabilities(arr.map(x => x*100));
+                setProbs(arr.map(x => x * 100));
             }
-            console.log(arr);
         }
     }, []);
 
@@ -70,23 +62,23 @@ function App() {
                             <option key={model} value={model}>{model}</option>
                         ))}
                     </select>
-                    
+
                     {modelInfo && (
                         <div className="mt-4 p-3 rounded bg-[#181818] border border-gray-700 text-sm w-full">
                             <div>Parameters: {modelInfo.parameters}</div>
                             <div>Layers: [{modelInfo.layers?.join(", ")}]</div>
                             <div>
-                                Training params: Epochs: {modelInfo.epochs ?? "?"},
-                                learnrate: {modelInfo.learning_rate ?? "?"},
-                                batchsize: {modelInfo.batch_size ?? "?"}
+                                Epochs: {modelInfo.epochs ?? "?"},{" "}
+                                Learning Rate: {modelInfo.learning_rate ?? "?"},{" "}
+                                Batch Size: {modelInfo.batch_size ?? "?"}
                             </div>
                             <div>
-                                Acc: Learn Acc: {modelInfo.train_acc?.toFixed(2) ?? "?"}%,
-                                Test Acc: {modelInfo.test_acc?.toFixed(2) ?? "?"}%
+                                Train Accuracy: {modelInfo.train_acc?.toFixed(2) ?? "?"}%,{" "}
+                                Test Accuracy: {modelInfo.test_acc?.toFixed(2) ?? "?"}%
                             </div>
                         </div>
                     )}
-                    
+
                 </div>
             </div>
             <div className="p-6 border border-white/20 rounded-2xl bg-black flex flex-col gap-0 w-72">
