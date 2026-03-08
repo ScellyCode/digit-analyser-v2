@@ -8,8 +8,8 @@ export default function ProbabilityBar({ value, percentage, isLast }) {
                 <span className="text-white font-semibold text-lg w-6 text-right mr-3 select-none">{value}</span>
                 <div className="relative flex-1 h-4 bg-white/10 rounded-full overflow-hidden mx-3">
                     <div
-                        className="absolute left-0 top-0 h-full bg-linear-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-500 ease-out"
-                        style={{ width: `${limited}%` }}
+                        className="absolute left-0 top-0 h-full rounded-full transition-all duration-500 ease-out"
+                        style={{ width: `${limited}%`, background: 'linear-gradient(to right, #a855f7, #ec4899)' }}
                     />
                 </div>
                 <span className="text-white font-mono text-base w-16 text-left ml-3 select-none">{rounded}%</span>
