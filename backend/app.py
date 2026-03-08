@@ -76,7 +76,15 @@ class Api:
         Args:
             model_filename: name of the model file.
         """
-        self.nn = NeuralNetwork(model_filename)
+        # Ensure that the requested model is one of the known models in the models directory.
+        available_models = self.get_models()
+        if model_filename not in available_models:
+            raise ValueError(f"Invalid model filename: {model_filename!r}")
+
+        models_dir = get_models_dir()
+        model_path = os.path.join(models_dir, model_filename)
+
+        self.nn = NeuralNetwork(model_path)
         self.current_model = model_filename
 
     def get_model_info(self) -> dict:
