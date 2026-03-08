@@ -122,7 +122,10 @@ class NeuralNetwork:
         Returns:
             dict: Dictionary that contains the model information.
         """
-        filepath = os.path.join(get_models_dir(), self.file_name)
+        filename = self.file_name
+        if not filename.endswith(".npz"):
+            filename += ".npz"
+        filepath = os.path.join(get_models_dir(), filename)
         info = {}
         with np.load(filepath) as data:
             info["parameters"] = int(sum(data[k].size for k in data if k.startswith("W") or k.startswith("b")))
