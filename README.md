@@ -10,4 +10,4 @@ You can just download the .exe file from the newest release.
 ### Package .exe from Source
 You have to download the source files and open them ideally in PyCharm.
 When using PyCharm you only have to run the already existing run config "Package App \[dist\]" and the packaged .exe file will be available in the __dist__ folder.
-Alternatively you can just run the batch file named "build_app.bat" and it will do the same as the mentioned methode above.
+Alternatively you can just run the batch file named "build_app.bat" and it will do the same as the mentioned method above.
