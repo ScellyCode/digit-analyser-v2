@@ -15,7 +15,7 @@ cd ..
 
 echo 3. Package Python App (PyInstaller)
 echo ...
-pyinstaller --noconsole --onefile --name "DigitAnalyser" --icon "assets/lament.ico" --add-data "frontend/dist;frontend/dist" --add-data "models;models" --add-data "docs/build/html;docs/html" backend/app.py
+pyinstaller --noconsole --onefile --name "DigitAnalyser" --icon "assets/app_icon.ico" --add-data "frontend/dist;frontend/dist" --add-data "models;models" --add-data "docs/build/html;docs/html" backend/app.py
 
 echo Build Complete!
 pause
