@@ -117,7 +117,7 @@ class NeuralNetwork:
 
     def get_model_info(self) -> dict:
         """
-        Returns metadate of the current model.
+        Returns metadata of the current model.
         
         Returns:
             dict: Dictionary that contains the model information.
