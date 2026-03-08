@@ -13,6 +13,9 @@ from helper_functions import resource_path, get_highest_model_filename, get_mode
 class Api:
     def __init__(self):
         self.current_model = get_highest_model_filename()
+        if self.current_model is None:
+            models_dir = get_models_dir()
+            raise RuntimeError(f"No model files found in models directory: {models_dir}")
         self.nn = NeuralNetwork(self.current_model)
 
     def __save_debug_image(self, image_data_vector: list[float]) -> None:
