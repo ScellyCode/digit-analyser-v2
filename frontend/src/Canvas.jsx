@@ -24,7 +24,7 @@ export default function Canvas({ onVector }) {
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
