@@ -7,7 +7,7 @@ import webview
 from PIL import Image
 
 from neural_network import NeuralNetwork
-from helper_functions import resource_path, get_highest_model_filename, get_models_dir
+from helper_functions import resource_path, get_highest_model_filename, get_models_dir, preprocess_digit
 
 
 class Api:
@@ -21,7 +21,7 @@ class Api:
     def __save_debug_image(self, image_data_vector: list[float]) -> None:
         """
         Saves a debug image to disk to visualize what the NN is receiving.
-        
+
         Args:
             image_data_vector (list[float]): A list of floats representing the image data.
         """
@@ -34,13 +34,14 @@ class Api:
     def predict_digit(self, image_data_vector: list[float]) -> list[float]:
         """
         Takes an image vector and gives back a prediction for each digit in the form of a list.
-        
+
         Args:
             image_data_vector (list[float]): A list of floats representing the image data.
 
         Returns:
             list[float]: A list of floats representing the probability of every digit.
         """
+        image_data_vector = preprocess_digit(image_data_vector)
         if '--dev' in sys.argv:
             self.__save_debug_image(image_data_vector)
         x = np.array(image_data_vector).reshape(1, -1)
@@ -49,7 +50,7 @@ class Api:
     def get_current_model(self) -> str:
         """
         Returns the current model name.
-        
+
         Returns:
             str: The current model name.
 
@@ -59,7 +60,7 @@ class Api:
     def get_models(self) -> list[str]:
         """
         Returns a list of all available models.
-        
+
         Returns:
             list[str]: A list of all available models.
 
@@ -72,11 +73,10 @@ class Api:
     def set_model(self, model_filename: str) -> None:
         """
         Loads a new model from name.
-        
+
         Args:
             model_filename: name of the model file.
         """
-        # Ensure that the requested model is one of the known models in the models directory.
         available_models = self.get_models()
         if model_filename not in available_models:
             raise ValueError(f"Invalid model filename: {model_filename!r}")
@@ -90,7 +90,7 @@ class Api:
     def get_model_info(self) -> dict:
         """
         Returns the current model information.
-        
+
         Returns:
             dict: A dictionary containing information about the current model.
         """
