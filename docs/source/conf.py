@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.abspath('../../backend'))
 project = 'Digit Analyser'
 copyright = '2026, Moritz Herrmann'
 author = 'Moritz Herrmann'
-release = '2.0.0'
+release = '2.4.3'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
