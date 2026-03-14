@@ -7,12 +7,21 @@ function App() {
     const [models, setModels] = useState([])
     const [selectedModel, setSelectedModel] = useState("")
     const [modelInfo, setModelInfo] = useState(null);
+    
+    const sortModels = (models) => {
+        return models.sort((a, b) => {
+           const versionA = parseInt(a.match(/v(\d+)/)?.[1] ?? 0);
+           const versionB = parseInt(b.match(/v(\d+)/)?.[1] ?? 0);
+           
+           return versionA - versionB;
+        });
+    };
 
     useEffect(() => {
         let interval = setInterval(() => {
             if (window.pywebview) {
                 window.pywebview.api.get_models().then(result => {
-                    setModels(result);
+                    setModels(sortModels(result));
                     window.pywebview.api.get_current_model().then(async current => {
                         setSelectedModel(current ?? (result[0] ?? ""));
                         if (current ?? result[0]) {
