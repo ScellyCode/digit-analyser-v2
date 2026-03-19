@@ -7,15 +7,26 @@ function App() {
     const [models, setModels] = useState([])
     const [selectedModel, setSelectedModel] = useState("")
     const [modelInfo, setModelInfo] = useState(null);
+    
+    const sortModels = (models) => {
+        return [...models].sort((a, b) => {
+            const versionA = parseInt(a.match(/v(\d+)/)?.[1] ?? 0);
+            const versionB = parseInt(b.match(/v(\d+)/)?.[1] ?? 0);
+
+            return versionA - versionB;
+        });
+    };
 
     useEffect(() => {
         let interval = setInterval(() => {
             if (window.pywebview) {
                 window.pywebview.api.get_models().then(result => {
-                    setModels(result);
+                    const sortedModels = sortModels(result);
+                    setModels(sortedModels);
                     window.pywebview.api.get_current_model().then(async current => {
-                        setSelectedModel(current ?? (result[0] ?? ""));
-                        if (current ?? result[0]) {
+                        const fallbackModel = sortedModels[0] ?? "";
+                        setSelectedModel(current ?? fallbackModel);
+                        if (current ?? fallbackModel) {
                             const info = await window.pywebview.api.get_model_info();
                             setModelInfo(info)
                         }
@@ -50,7 +61,7 @@ function App() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#282c34] text-[#abb2bf]">
-            <div className="mr-8 p-6 flex-shrink-0">
+            <div className="mr-8 p-6 shrink-0">
                 <Canvas onVector={handleVector} />
                 <div className="flex flex-col items-center mt-4 w-full">
                     <select
