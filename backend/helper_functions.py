@@ -104,6 +104,11 @@ def preprocess_digit(image_vector: list[float]) -> list[float]:
     Returns:
         list[float]: Processed image vector to use for prediction.
     """
+    if len(image_vector) != 28 * 28:
+        raise ValueError(
+            f"preprocess_digit expected image_vector of length {28 * 28} (28x28), "
+            f"but got {len(image_vector)}."
+        )
     img = np.array(image_vector).reshape(28, 28)
 
     rows = np.any(img > 0.01, axis=1)
