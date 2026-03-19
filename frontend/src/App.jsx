@@ -59,7 +59,7 @@ function App() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#282c34] text-[#abb2bf]">
-            <div className="mr-8 p-6 flex-shrink-0">
+            <div className="mr-8 p-6 shrink-0">
                 <Canvas onVector={handleVector} />
                 <div className="flex flex-col items-center mt-4 w-full">
                     <select
