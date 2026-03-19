@@ -9,11 +9,11 @@ function App() {
     const [modelInfo, setModelInfo] = useState(null);
     
     const sortModels = (models) => {
-        return models.sort((a, b) => {
-           const versionA = parseInt(a.match(/v(\d+)/)?.[1] ?? 0);
-           const versionB = parseInt(b.match(/v(\d+)/)?.[1] ?? 0);
-           
-           return versionA - versionB;
+        return [...models].sort((a, b) => {
+            const versionA = parseInt(a.match(/v(\d+)/)?.[1] ?? 0);
+            const versionB = parseInt(b.match(/v(\d+)/)?.[1] ?? 0);
+
+            return versionA - versionB;
         });
     };
 
@@ -21,10 +21,12 @@ function App() {
         let interval = setInterval(() => {
             if (window.pywebview) {
                 window.pywebview.api.get_models().then(result => {
-                    setModels(sortModels(result));
+                    const sortedModels = sortModels(result);
+                    setModels(sortedModels);
                     window.pywebview.api.get_current_model().then(async current => {
-                        setSelectedModel(current ?? (result[0] ?? ""));
-                        if (current ?? result[0]) {
+                        const fallbackModel = sortedModels[0] ?? "";
+                        setSelectedModel(current ?? fallbackModel);
+                        if (current ?? fallbackModel) {
                             const info = await window.pywebview.api.get_model_info();
                             setModelInfo(info)
                         }
