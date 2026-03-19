@@ -41,7 +41,11 @@ class Api:
         Returns:
             list[float]: A list of floats representing the probability of every digit.
         """
-        image_data_vector = preprocess_digit(image_data_vector)
+        try:
+            image_data_vector = preprocess_digit(image_data_vector)
+        except ValueError as e:
+            # Provide a clearer error message for the frontend instead of a generic pywebview error
+            raise ValueError(f"Invalid image data for digit prediction: {e}") from e
         if '--dev' in sys.argv:
             self.__save_debug_image(image_data_vector)
         x = np.array(image_data_vector).reshape(1, -1)
